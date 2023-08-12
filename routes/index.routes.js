@@ -3,7 +3,7 @@ const stripe = require('stripe')(process.env.PRIVATE_KEY_STRIPE);
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 
 router.post('/create-checkout-session', async (req, res, next) => {
-    const { priceId } = req.body;  
+    const { priceId, customerEmail } = req.body;  
     console.log(priceId);
     try{
     const session = await stripe.checkout.sessions.create({
@@ -30,5 +30,9 @@ router.post('/create-checkout-session', async (req, res, next) => {
       }
   
     });
+
+    router.get("/sucess", async (req,res) => {
+      
+    })
 
 module.exports = router;
