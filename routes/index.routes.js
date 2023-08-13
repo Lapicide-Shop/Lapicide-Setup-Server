@@ -6,6 +6,10 @@ router.get("/", (req, res, next) => {
   res.json("All good in here");
 });
 
+router.get("/create-checkout-session", (req, res, next) => {
+  res.json("All good in here");
+});
+
 router.post('/create-checkout-session', async (req, res, next) => {
     const { priceId, customerEmail } = req.body;  
     console.log(priceId);
