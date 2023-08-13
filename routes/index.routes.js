@@ -2,6 +2,10 @@ const router = require("express").Router();
 const stripe = require('stripe')(process.env.PRIVATE_KEY_STRIPE);
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 
+router.get("/", (req, res, next) => {
+  res.json("All good in here");
+});
+
 router.post('/create-checkout-session', async (req, res, next) => {
     const { priceId, customerEmail } = req.body;  
     console.log(priceId);
