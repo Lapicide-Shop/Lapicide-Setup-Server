@@ -45,7 +45,7 @@ router.post('/create-checkout-session', async (req, res, next) => {
 
 
 
-  router.post('/webhook',  (req, res, next) => {
+ {/* router.post('/webhook',  (req, res, next) => {
  
   const sig = request.headers['stripe-signature'];
 
@@ -115,6 +115,6 @@ router.post('/create-checkout-session', async (req, res, next) => {
       }  
     }
     }  
-  });
+  });   */}
 
 module.exports = router;
