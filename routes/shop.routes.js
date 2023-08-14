@@ -1,6 +1,6 @@
 const router = require("express").Router();
 require("dotenv").config();
-const stripe = require('stripe')("sk_test_51LOmW7EudbBbgrFH8w0cTrdJo1TSKyWNAK8B3IYz76u6S3cvT50tSvgKgOCCPkeFmPLCs94aMmxUTQD88WZwIeMV00SdSWu3pR");
+const stripe = require('stripe')("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");
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 const endpointSecret = process.env.SIGNATURE_KEY;
 
@@ -45,7 +45,7 @@ router.post('/create-checkout-session', async (req, res, next) => {
 
 
 
- {/* router.post('/webhook',  (req, res, next) => {
+{/*} router.post('/webhook',  (req, res, next) => {
  
   const sig = request.headers['stripe-signature'];
 
@@ -115,6 +115,6 @@ router.post('/create-checkout-session', async (req, res, next) => {
       }  
     }
     }  
-  });   */}
+  });  */}
 
 module.exports = router;
