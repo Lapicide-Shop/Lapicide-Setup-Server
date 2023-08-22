@@ -2,7 +2,7 @@ const express = require("express")
 const router = require("express").Router();
 
 require("dotenv").config();
-const stripe = require('stripe')("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");
+const stripe = require('stripe')(process.env.PRIVATE_KEY_STRIPE);
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 const endpointSecret = process.env.SIGNATURE_KEY;
 const nodemailer = require("nodemailer");
