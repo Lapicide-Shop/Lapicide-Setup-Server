@@ -7,6 +7,8 @@ npm-debug.log
 # Environment Variables should NEVER be published
 .env
 
+zip/
+
 # macOS
 .DS_Store
 .AppleDouble
@@ -22,4 +24,3 @@ ehthumbs.db
 # VS Code
 .vscode/*
 
-zip
