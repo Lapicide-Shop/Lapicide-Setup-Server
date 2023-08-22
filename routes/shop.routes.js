@@ -1,8 +1,12 @@
+const express = require("express")
 const router = require("express").Router();
+
 require("dotenv").config();
 const stripe = require('stripe')("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");
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 const endpointSecret = process.env.SIGNATURE_KEY;
+const nodemailer = require("nodemailer");
+const WebPath = require('../zip/')
 
 
 router.get("/", (req, res, next) => {
@@ -13,8 +17,6 @@ router.get("/", (req, res, next) => {
 
 router.post('/create-checkout-session', async (req, res, next) => {
     const { priceId } = req.body;  
-
-    console.log(priceId);
     try{
     
     const session = await stripe.checkout.sessions.create({
@@ -26,11 +28,10 @@ router.post('/create-checkout-session', async (req, res, next) => {
           },
         ],
         mode: 'payment',
-        success_url: `${FRONTEND_URL}/success`,
+        success_url: `${FRONTEND_URL}`,
         cancel_url: `${FRONTEND_URL}/shop`,
         automatic_tax: {enabled: true},
       });
-      console.log(session);
         res.json({ id: session.id });
       } catch (e) {
         return res.status(400).send({
@@ -45,45 +46,50 @@ router.post('/create-checkout-session', async (req, res, next) => {
 
 
 
-{/*} router.post('/webhook',  (req, res, next) => {
- 
+ router.post('/webhook', express.raw({type: 'application/json'}),  (req, res, next) => {
+   let event= req.body;
+   console.log(event);
   const sig = request.headers['stripe-signature'];
 
-  let event;
+
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
   } catch (err) {
-    return   res.status(400).send(`Webhook Error: ${err.message}`);
+    console.log(`⚠️  Webhook signature verification failed.`, err.message);
+    return response.sendStatus(400)
   }
+  
 
-  // Handle the event
-  if (event.type ===  'checkout.session.async_payment_succeeded'){
+  if (event.type ===  'checkout.session.completed'){
 
     const sessionId = event.data.object.id;
     const customerEmail = event.data.object.customer_email;
-    const lineItems = event.data.object.display_items;
+    const productId = event.data.object.display_items[0].custom.product_id;
 
-    console.log(lineItems);
+    console.log(productId);
     console.log(customerEmail);
 
-    const productInfo = lineItems.find(item => {
-      
-      return item.custom.name === "Your Product Name";
-    });
 
-    if(productInfo){
+    if(productId){
 
+      let attachmentPath = '';
       let emailSubject = '';
       let emailText = '';  
 
-      if(productInfo.custom.name === "Lapicide - Web (Socials + Apps) / S License ( 2-5 Employees)"){
+      if (productId === "price_1NdFFZEudbBbgrFHFIaBR6UN" || "price_1NdFHKEudbBbgrFHthrawpKL" || "price_1NdFHzEudbBbgrFHvmphRtaw" || "price_1NdFIREudbBbgrFHhBdC4l46"){
         emailSubject = 'Confirmation de paiement pour Lapicide par Emilie Vizcano';
         emailText = `Thanks for purchasing Lapicide ! You should received your type soon by email. Don’t forget to credite me and don’t hesitate to share with me your artworks so I can share it! :)`;
-      } else {
-        emailSubject="no"
-        emailText= "no"
-      }
+        attachmentPath = ""
+      } else if (productId === "price_1NdFJUEudbBbgrFHqCASyZWM" || "price_1NdFKEEudbBbgrFHDqaaHqMR" || "price_1NdFKgEudbBbgrFHhcyK4Sxo" || "price_1NdFL2EudbBbgrFHWoWm5zJB" || "price_1Nf5XgEudbBbgrFHjGRhUT2s"){
+        emailSubject = 'Confirmation de paiement pour Lapicide par Emilie Vizcano';
+        emailText = `Thanks for purchasing Lapicide ! You should received your type soon by email. Don’t forget to credite me and don’t hesitate to share with me your artworks so I can share it! :)`;
+        attachmentPath = ""
+      } else if (productId === "price_1NdFMdEudbBbgrFHNupiNdhO" || "price_1NdFNCEudbBbgrFHEJPu5gAP" || "price_1NdFQzEudbBbgrFH8HyY2qOF" || "price_1NdFTpEudbBbgrFHGmULRTav"){
+        emailSubject = 'Confirmation de paiement pour Lapicide par Emilie Vizcano';
+        emailText = `Thanks for purchasing Lapicide ! You should received your type soon by email. Don’t forget to credite me and don’t hesitate to share with me your artworks so I can share it! :)`;
+        attachmentPath = ""
+      };
 
 
       try{
@@ -115,6 +121,8 @@ router.post('/create-checkout-session', async (req, res, next) => {
       }  
     }
     }  
-  });  */}
+
+    res.send();
+  });  
 
 module.exports = router;
