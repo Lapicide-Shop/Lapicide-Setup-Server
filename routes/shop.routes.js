@@ -6,7 +6,6 @@ const stripe = require('stripe')(process.env.PRIVATE_KEY_STRIPE);
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 const endpointSecret = process.env.SIGNATURE_KEY;
 const nodemailer = require("nodemailer");
-const WebPath = require('../zip/')
 
 
 router.get("/", (req, res, next) => {
