@@ -16,8 +16,7 @@ router.get("/", (req, res, next) => {
 
 router.post('/create-checkout-session', async (req, res, next) => {
     const { priceId } = req.body;
-    console.log(process.env.PRIVATE_KEY_STRIPE);
- 
+    console.log(priceId);
     try{
     
     const session = await stripe.checkout.sessions.create({
