@@ -45,7 +45,7 @@ router.post('/create-checkout-session', async (req, res, next) => {
 
 
 
-
+{/*
  router.post('/webhook', express.raw({type: 'application/json'}),  (req, res, next) => {
    let event= req.body;
    console.log(event);
@@ -123,6 +123,6 @@ router.post('/create-checkout-session', async (req, res, next) => {
     }  
 
     res.send();
-  });  
+  });  */}
 
 module.exports = router;
