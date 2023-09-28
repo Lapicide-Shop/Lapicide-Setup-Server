@@ -7,7 +7,7 @@ const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
 const endpointSecret = process.env.SIGNATURE_KEY;
 const nodemailer = require("nodemailer");
 
-
+console.log(process.env.PRIVATE_KEY_STRIPE);
 router.get("/", (req, res, next) => {
   res.json("All good in here");
 });
@@ -15,7 +15,9 @@ router.get("/", (req, res, next) => {
 
 
 router.post('/create-checkout-session', async (req, res, next) => {
-    const { priceId } = req.body;  
+    const { priceId } = req.body;
+    console.log(process.env.PRIVATE_KEY_STRIPE);
+ 
     try{
     
     const session = await stripe.checkout.sessions.create({
