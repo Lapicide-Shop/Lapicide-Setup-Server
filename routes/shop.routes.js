@@ -4,8 +4,8 @@ const router = require("express").Router();
 require("dotenv").config();
 const stripe = require('stripe')(process.env.PRIVATE_KEY_STRIPE);
 const FRONTEND_URL =  process.env.ORIGIN || "http://localhost:3000";
-const endpointSecret = process.env.SIGNATURE_KEY;
-const nodemailer = require("nodemailer");
+// const endpointSecret = process.env.SIGNATURE_KEY;
+// const nodemailer = require("nodemailer");
 
 console.log(process.env.PRIVATE_KEY_STRIPE);
 router.get("/", (req, res, next) => {
